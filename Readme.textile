@@ -1,0 +1,18 @@
+h1. Dice Parser
+
+A Ruby rewrite of my original "dice.y":https://user.4574.co.uk/p/dice using "kpeg":https://github.com/evanphx/kpeg.
+
+Support for arbitrarily complex expressions containing parentheses (()), basic four (+_*/), roll dice (d) and keep highest (k).
+
+h2. Setup
+
+bc. $ gem install kpeg
+$ kpeg dice.kpeg
+
+h2. Use
+
+bc. $ ./repl
+>> (2*6+3)d15k(3d2)+5
+19
+>> ^D
+$

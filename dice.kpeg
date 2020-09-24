@@ -1,0 +1,32 @@
+%% name=Dice
+
+%% {
+  attr_accessor :result
+
+  def roll(sides, qty = 1, keep = qty)
+    Array.new(qty){rand(sides)}.sort.last(keep).sum
+  end
+}
+
+- = /[ \t]*/
+D = /[dD]/
+K = /[kK]/
+NUM = < /[1-9][0-9]*/ > { text.to_i }
+
+root = < input:i > { puts text; @result = i }
+
+input = input:i - "+" - fact:f { i + f }
+      | input:i - "-" - fact:f { i - f }
+      | fact
+
+fact = fact:f - "*" - exp:e { f * e }
+     | fact:f - "/" - exp:e { f / e }
+     | exp
+
+exp = term:q - D - term:s - K - term:k { roll(s, q, k) }
+    | term:q - D - term:s { roll(s, q) }
+    | D - term:s { roll(s) }
+    | term
+
+term = NUM
+     | "(" - input:i - ")" { i }
